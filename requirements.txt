@@ -1,0 +1,5 @@
+BeautifulSoup
+PIL
+numpy
+tensorflow
+streamlit
