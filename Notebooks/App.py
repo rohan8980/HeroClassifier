@@ -32,13 +32,54 @@ model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
 # Streamlit UI
 st.title("Superhero Image Classifier")
 
-uploaded_file = st.file_uploader("Choose an Image...", type=["jpg", "jpeg", "png", "webp"])
+# Superhero names and corresponding image file names
+superheroes = {
+    'Batman': 'Batman.jpg',
+    'Superman': 'superman.webp',
+    'Wonder Woman': 'Wonder Woman.jpg',
+    'The Flash': 'The Flash.webp',
+    'Black Panther': 'Black Panther.png',
+    'Spiderman': 'spiderman.jpg',
+    'Iron Man': 'Iron Man.webp',
+    'Captain America': 'Captain America.jpg',
+    'Hulk': 'Hulk.jpg',
+    'Black Widow': 'Black Widow.jpg',
+}
+
+col1, col2, col3, col4, col5 = st.columns(5)
+
+with col1:
+    for i in range(5):
+        name, image_filename = list(superheroes.items())[i]
+        image_path = f"UI Images/{image_filename}"
+        image = Image.open(image_path)
+        st.image(image, width=29)
+with col2:
+    for i in range(5):
+        name, image_filename = list(superheroes.items())[i]
+        st.markdown(f"<p style='font-size: 18px;'>{name}</p>", unsafe_allow_html=True)
+        # st.write(f"{name}")
+        
+with col4:
+    for i in range(5, 10):
+        name, image_filename = list(superheroes.items())[i]
+        image_path = f"UI Images/{image_filename}"
+        image = Image.open(image_path)
+        st.image(image, width=29)       
+with col5:
+    for i in range(5, 10):
+        name, image_filename = list(superheroes.items())[i]
+        st.markdown(f"<p style='font-size: 18px;'>{name}</p>", unsafe_allow_html=True)
+        # st.write(f"{name}")
+
+st.write()
+
+allowed_extensions = ["jpg", "jpeg", "png", "webp"]
+uploaded_file = st.file_uploader("Choose an Image...", type=allowed_extensions)
 
 if uploaded_file is not None:
-    # Load the image
-    image = Image.open(uploaded_file)
-
     # Preprocess to convert to 224*224
+    image = Image.open(uploaded_file)
     image_array = preprocess_image(image, (224, 224))
 
     # Prediction
