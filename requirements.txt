@@ -1,4 +1,3 @@
-BeautifulSoup
 PIL
 numpy
 tensorflow
