@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 import gdown
+import io
 import os
 
 def preprocess_image(img, img_size):
@@ -11,6 +12,17 @@ def preprocess_image(img, img_size):
     img_array = tf.keras.preprocessing.image.img_to_array(img_resize)
     img_array = tf.keras.applications.vgg16.preprocess_input(img_array)
     return img_array
+
+def load_model_from_google_drive(fileid):
+    # import gdown
+    weights_url = f'https://drive.google.com/uc?id={fileid}'
+    gdown.download(weights_url, 'superhero_classifier_model_3.h5', quiet=True)
+    try:
+        model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
+    except Exception as e:
+        st.error(f"Error loading the model: {e}")
+
+    return model
 
 # Label mappings from Model Training.ipynb
 label_mappings = {
@@ -27,19 +39,11 @@ label_mappings = {
                  }
 
 name_label_mappings = {value: name for name, value in label_mappings.items()}
-    
-
-# Load the saved model from Google Drive: https://drive.google.com/file/d/1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq/view?usp=sharing    
-weights_file_id = '1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq'
-weights_url = f'https://drive.google.com/uc?id={weights_file_id}'
-
-# st.write("Downloading weights file...")
-gdown.download(weights_url, 'superhero_classifier_model_3.h5', quiet=True)
-try:
-    model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
-except Exception as e:
-    st.error(f"Error loading the model: {e}")
-
+                                          
+# Load the saved model from Google Drive: https://drive.google.com/file/d/1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq/view?usp=sharing
+google_drive_file_id = '1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq'
+model = load_model_from_google_drive(google_drive_file_id)
+# model = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
 
 # Streamlit UI
 st.title("Superhero Image Classifier")
