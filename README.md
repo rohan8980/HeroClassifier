@@ -12,7 +12,7 @@ HeroClassifier is a deep learning project designed for classifying images of 10 
 
   - `Data Scraping and Preprocessing.ipynb`: Web scraping of images and preprocessing the scraped images to align with the base model VGG16.
 
-  - `Model Training.ipynb`: Notebook for CNN training and saving the model weights. Saved model weights can be downloaded [here](https://drive.google.com/drive/folders/1WXLqsUePk7CElHA5AVsb1QA9eMWRzmMe?usp=sharing)
+  - `Model Training.ipynb`: Notebook for CNN training and saving the model weights. Saved model weights can be downloaded [here](https://drive.google.com/file/d/1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq/view?usp=sharing) in [folder](https://drive.google.com/drive/folders/1WXLqsUePk7CElHA5AVsb1QA9eMWRzmMe?usp=sharing)
 
   - `App.py`: Streamlit code for a user-friendly UI to upload images of any superhero from the 10 classes and make predictions.
 

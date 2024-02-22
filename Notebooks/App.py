@@ -3,6 +3,7 @@ import requests
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+import gdown
 
 def preprocess_image(img, img_size):
     img_resize = img.resize(img_size)
@@ -26,8 +27,18 @@ label_mappings = {
 
 name_label_mappings = {value: name for name, value in label_mappings.items()}
     
-# Load the saved model
-model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
+
+# Load the saved model from Google Drive: https://drive.google.com/file/d/1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq/view?usp=sharing    
+weights_file_id = '1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq'
+weights_url = f'https://drive.google.com/uc?id={weights_file_id}'
+
+# st.write("Downloading weights file...")
+gdown.download(weights_url, 'superhero_classifier_model_3.h5', quiet=True)
+try:
+    model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
+except Exception as e:
+    st.error(f"Error loading the model: {e}")
+
 
 # Streamlit UI
 st.title("Superhero Image Classifier")
