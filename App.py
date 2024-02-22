@@ -47,11 +47,11 @@ st.title("Superhero Image Classifier")
 # Superhero names and corresponding image file names
 superheroes = {
     'Batman': 'Batman.jpg',
-    'Superman': 'superman.png',
+    'Superman': 'Superman.webp',
     'Wonder Woman': 'Wonder Woman.jpg',
     'The Flash': 'The Flash.webp',
     'Black Panther': 'Black Panther.png',
-    'Spiderman': 'spiderman.jpg',
+    'Spiderman': 'Spiderman.jpg',
     'Iron Man': 'Iron Man.webp',
     'Captain America': 'Captain America.jpg',
     'Hulk': 'Hulk.jpg',
@@ -60,7 +60,6 @@ superheroes = {
 
 col1, col2, col3, col4, col5 = st.columns(5)
 base_image_path = os.path.join(os.getcwd(), 'Notebooks', 'UI Images')
-
 
 with col1:
     for i in range(5):
