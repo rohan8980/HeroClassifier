@@ -62,7 +62,7 @@ col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     for i in range(5):
         name, image_filename = list(superheroes.items())[i]
-        image_path = f"UI Images/{image_filename}"
+        image_path = f"Notebooks/UI Images/{image_filename}"
         image = Image.open(image_path)
         st.image(image, width=29)
 with col2:
@@ -74,7 +74,7 @@ with col2:
 with col4:
     for i in range(5, 10):
         name, image_filename = list(superheroes.items())[i]
-        image_path = f"UI Images/{image_filename}"
+        image_path = f"Notebooks/UI Images/{image_filename}"
         image = Image.open(image_path)
         st.image(image, width=29)       
 with col5:
