@@ -47,7 +47,7 @@ st.title("Superhero Image Classifier")
 # Superhero names and corresponding image file names
 superheroes = {
     'Batman': 'Batman.jpg',
-    'Superman': 'superman.webp',
+    'Superman': 'superman.png',
     'Wonder Woman': 'Wonder Woman.jpg',
     'The Flash': 'The Flash.webp',
     'Black Panther': 'Black Panther.png',
