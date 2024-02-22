@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 import gdown
+import os
 
 def preprocess_image(img, img_size):
     img_resize = img.resize(img_size)
@@ -58,11 +59,13 @@ superheroes = {
 }
 
 col1, col2, col3, col4, col5 = st.columns(5)
+base_image_path = os.path.join(os.getcwd(), 'Notebooks', 'UI Images')
+
 
 with col1:
     for i in range(5):
         name, image_filename = list(superheroes.items())[i]
-        image_path = f"Notebooks/UI Images/{image_filename}"
+        image_path = os.path.join(base_image_path, image_filename)
         image = Image.open(image_path)
         st.image(image, width=29)
 with col2:
@@ -74,7 +77,7 @@ with col2:
 with col4:
     for i in range(5, 10):
         name, image_filename = list(superheroes.items())[i]
-        image_path = f"Notebooks/UI Images/{image_filename}"
+        image_path = os.path.join(base_image_path, image_filename)
         image = Image.open(image_path)
         st.image(image, width=29)       
 with col5:
