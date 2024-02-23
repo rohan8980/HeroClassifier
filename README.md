@@ -1,6 +1,6 @@
 # HeroClassifier
 
-HeroClassifier is a deep learning project designed for classifying images of 10 superheroes. The repository encompasses various components such as data scraping, data preprocessing, model development utilizing transfer learning (VGG16), training and evaluation scripts, and model deployment using Streamlit. The model demonstrates an impressive 88.67% accuracy on unseen data. The application is hosted [here] (https://heroclassifier.streamlit.app/).
+HeroClassifier is a deep learning project designed for classifying images of 10 superheroes. The repository encompasses various components such as data scraping, data preprocessing, model development utilizing transfer learning (VGG16), training and evaluation scripts, and model deployment using Streamlit. The model demonstrates an impressive 88.67% accuracy on unseen data. The application is hosted [here](https://heroclassifier.streamlit.app/)
 
 ## Project Structure
 
