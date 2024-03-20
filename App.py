@@ -13,24 +13,25 @@ def preprocess_image(img, img_size):
     img_array = tf.keras.applications.vgg16.preprocess_input(img_array)
     return img_array
 
-def load_model_from_google_drive(fileid):
-    # import gdown
+def load_model_from_google_drive(fileid, save_path):
+    # Download and Save Model
     weights_url = f'https://drive.google.com/uc?id={fileid}'
-    download_path = "superhero_classifier_model_3.h5"
-    gdown.download(weights_url, download_path, quiet=True)
+    gdown.download(weights_url, save_path, quiet=True)
+    # Load and Return Model
     try:
-        model_gd = tf.keras.models.load_model(download_path)
+        model_gd = tf.keras.models.load_model(save_path)
     except Exception as e:
         st.error(f"Error loading the model: {e}")
     return model_gd
 
-def load_model_from_dropbox(dropbox_link):
+def load_model_from_dropbox(dropbox_link, save_path):
+    # Download and Save Model
     response = requests.get(dropbox_link)
-    download_path = 'superhero_classifier_model_3.h5'
-    with open(download_path, 'wb') as f:
+    with open(save_path, 'wb') as f:
         f.write(response.content)
+    # Load and Return Model        
     try:
-        model_dbx = tf.keras.models.load_model(download_path)
+        model_dbx = tf.keras.models.load_model(save_path)
     except Exception as e:
         st.error(f"Error loading the model: {e}")
     return model_dbx
@@ -51,14 +52,17 @@ label_mappings = {
                  }
 
 name_label_mappings = {value: name for name, value in label_mappings.items()}
-                                          
+
+
+## Load the Model from Google Drive, Dropbox
+save_path = 'superhero_classifier_model_3.h5'
 # Load the saved model from Dropbox
-dropbox_link = st.secrets["DROPBOX_LINK"]
-model = load_model_from_dropbox(dropbox_link)
+# dropbox_link = st.secrets["DROPBOX_LINK"]
+# model = load_model_from_dropbox(dropbox_link, save_path)
 
 ## Load the saved model from Google Drive
-# google_drive_file_id = st.secrets["GOOGLE_DRIVE_FILE_ID"]
-# model = load_model_from_google_drive(google_drive_file_id)
+google_drive_file_id = st.secrets["GOOGLE_DRIVE_FILE_ID"]
+model = load_model_from_google_drive(google_drive_file_id, save_path)
 
 ## Load the saved model from local device
 # model = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
