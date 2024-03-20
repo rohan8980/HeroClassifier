@@ -54,7 +54,12 @@ label_mappings = {
 name_label_mappings = {value: name for name, value in label_mappings.items()}
                                           
 # Load the saved model from Dropbox
-dropbox_link = st.secrets["DROPBOX_LINK"]
+# dropbox_link = st.secrets["DROPBOX_LINK"]
+try:
+    dropbox_link = st.secrets["DROPBOX_LINK"]
+    st.write("Secret key:", dropbox_link)
+except Exception as e:
+    st.error(f"Error fetching key: {e}")
 model = load_model_from_dropbox(dropbox_link)
 
 ## Load the saved model from Google Drive
