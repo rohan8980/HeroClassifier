@@ -31,9 +31,11 @@ def load_model_from_dropbox(dropbox_link):
         f.write(response.content)
     try:
         model_dbx = tf.keras.models.load_model(download_path)
+        return model_dbx
     except Exception as e:
         st.error(f"Error loading the model: {e}")
-    return model_dbx
+        raise 
+    
 
 # Label mappings from Model Training.ipynb
 label_mappings = {
