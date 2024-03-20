@@ -16,22 +16,9 @@ def preprocess_image(img, img_size):
 def load_model_from_google_drive(fileid):
     # import gdown
     weights_url = f'https://drive.google.com/uc?id={fileid}'
-    download_path = "superhero_classifier_model_3.h5"
-    gdown.download(weights_url, download_path, quiet=True)
+    gdown.download(weights_url, 'superhero_classifier_model_3.h5', quiet=True)
     try:
-        model = tf.keras.models.load_model(download_path)
-    except Exception as e:
-        st.error(f"Error loading the model: {e}")
-
-    return model
-
-def load_model_from_dropbox(dropbox_link):
-    response = requests.get(dropbox_link)
-    download_path = 'superhero_classifier_model_3.h5'
-    with open(download_path, 'wb') as f:
-        f.write(response.content)
-    try:
-        model = tf.keras.models.load_model(download_path)
+        model = tf.keras.models.load_model("superhero_classifier_model_3.h5")
     except Exception as e:
         st.error(f"Error loading the model: {e}")
 
@@ -53,18 +40,10 @@ label_mappings = {
 
 name_label_mappings = {value: name for name, value in label_mappings.items()}
                                           
-# Load the saved model from Dropbox
-dropbox_link = st.secrets['DROPBOX_LINK']
-model = load_model_from_dropbox(dropbox_link)
-
-## Load the saved model from Google Drive
-# google_drive_file_id = st.secrets['GOOGLE_DRIVE_FILE_ID']
+# Load the saved model from Google Drive: https://drive.google.com/file/d/1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq/view?usp=sharing
+google_drive_file_id = '1fbIzH3C-UXcjBYT3dkPqxv60o0y35pnq'
 # model = load_model_from_google_drive(google_drive_file_id)
-
-## Load the saved model from local device
-# model = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
-
-
+model = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
 
 # Streamlit UI
 st.title("Superhero Image Classifier")
