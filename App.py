@@ -19,11 +19,10 @@ def load_model_from_google_drive(fileid):
     download_path = "superhero_classifier_model_3.h5"
     gdown.download(weights_url, download_path, quiet=True)
     try:
-        load_model = tf.keras.models.load_model(download_path)
+        model_gd = tf.keras.models.load_model(download_path)
     except Exception as e:
         st.error(f"Error loading the model: {e}")
-
-    return load_model
+    return model_gd
 
 def load_model_from_dropbox(dropbox_link):
     response = requests.get(dropbox_link)
@@ -31,11 +30,10 @@ def load_model_from_dropbox(dropbox_link):
     with open(download_path, 'wb') as f:
         f.write(response.content)
     try:
-        load_model = tf.keras.models.load_model(download_path)
+        model_dbx = tf.keras.models.load_model(download_path)
     except Exception as e:
         st.error(f"Error loading the model: {e}")
-
-    return load_model
+    return model_dbx
 
 # Label mappings from Model Training.ipynb
 label_mappings = {
