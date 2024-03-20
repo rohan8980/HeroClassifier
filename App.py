@@ -54,11 +54,11 @@ label_mappings = {
 name_label_mappings = {value: name for name, value in label_mappings.items()}
                                           
 # Load the saved model from Dropbox
-dropbox_link = st.secrets['DROPBOX_LINK']
+dropbox_link = st.secrets["DROPBOX_LINK"]
 model = load_model_from_dropbox(dropbox_link)
 
 ## Load the saved model from Google Drive
-# google_drive_file_id = st.secrets['GOOGLE_DRIVE_FILE_ID']
+# google_drive_file_id = st.secrets["GOOGLE_DRIVE_FILE_ID"]
 # model = load_model_from_google_drive(google_drive_file_id)
 
 ## Load the saved model from local device
