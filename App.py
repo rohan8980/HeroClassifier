@@ -4,8 +4,8 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 import gdown
-import io
 import os
+import gc
 
 def preprocess_image(img, img_size):
     img_resize = img.resize(img_size)
@@ -13,6 +13,11 @@ def preprocess_image(img, img_size):
     img_array = tf.keras.applications.vgg16.preprocess_input(img_array)
     return img_array
 
+
+## Load the Model from Google Drive
+save_path = 'superhero_classifier_model_3.h5'
+
+@st.cache_resource(ttl = 60*60 *24 *7, show_spinner="Fetching model from cloud...")
 def load_model_from_google_drive(fileid, save_path):
     # Download and Save Model
     weights_url = f'https://drive.google.com/uc?id={fileid}'
@@ -24,18 +29,41 @@ def load_model_from_google_drive(fileid, save_path):
         st.error(f"Error loading the model: {e}")
     return model_gd
 
-def load_model_from_dropbox(dropbox_link, save_path):
-    # Download and Save Model
-    response = requests.get(dropbox_link)
-    with open(save_path, 'wb') as f:
-        f.write(response.content)
-    # Load and Return Model        
-    try:
-        model_dbx = tf.keras.models.load_model(save_path)
-    except Exception as e:
-        st.error(f"Error loading the model: {e}")
-    return model_dbx
-    
+google_drive_file_id = st.secrets["GOOGLE_DRIVE_FILE_ID"]
+model_gd = load_model_from_google_drive(google_drive_file_id, save_path)
+
+
+## Load the saved model from Dropbox
+# def load_model_from_dropbox(dropbox_link, save_path):
+#     # Download and Save Model
+#     response = requests.get(dropbox_link)
+#     with open(save_path, 'wb') as f:
+#         f.write(response.content)
+#     # Load and Return Model        
+#     try:
+#         model_dbx = tf.keras.models.load_model(save_path)
+#     except Exception as e:
+#         st.error(f"Error loading the model: {e}")
+#     return model_dbx
+
+# dropbox_link = st.secrets["DROPBOX_LINK"]
+# model_dbx = load_model_from_dropbox(dropbox_link, save_path)
+
+
+## Load the saved model from local device
+# model_lcl = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
+
+## Selecting Cloud to load model from
+model = model_gd
+
+
+# Garbage Collector to manage memory in Streamlit    
+gc.enable()
+
+
+
+# Streamlit UI
+st.title("Superhero Image Classifier")
 
 # Label mappings from Model Training.ipynb
 label_mappings = {
@@ -52,25 +80,6 @@ label_mappings = {
                  }
 
 name_label_mappings = {value: name for name, value in label_mappings.items()}
-
-
-## Load the Model from Google Drive, Dropbox
-save_path = 'superhero_classifier_model_3.h5'
-# Load the saved model from Dropbox
-# dropbox_link = st.secrets["DROPBOX_LINK"]
-# model = load_model_from_dropbox(dropbox_link, save_path)
-
-## Load the saved model from Google Drive
-google_drive_file_id = st.secrets["GOOGLE_DRIVE_FILE_ID"]
-model = load_model_from_google_drive(google_drive_file_id, save_path)
-
-## Load the saved model from local device
-# model = tf.keras.models.load_model("Notebooks/superhero_classifier_model_3.h5")
-
-
-
-# Streamlit UI
-st.title("Superhero Image Classifier")
 
 # Superhero names and corresponding image file names
 superheroes = {
@@ -132,3 +141,7 @@ if uploaded_file is not None:
     st.write("Predicted Superhero:", predicted_class_name)
     st.write("Probability:", np.max(predictions))
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
+
+
+# Garbage Collection
+gc.collect()
